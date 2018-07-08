@@ -460,6 +460,12 @@ void DibujarTop(){
 
 	Rect mune(140,345,100,30);
 	rectangle(Top,mune,rojo,CV_FILLED);
+
+	int y=70;
+	for (int i=0; i<11; i++){
+		putText(Top, "-TOP 10-", Point(135,y), FONT_HERSHEY_TRIPLEX, 0.7, blanco);
+		y+=22;
+	}
 }
 
 
@@ -762,7 +768,7 @@ void datos(){
 
 	while(true){
 		imshow("Ventana",Ins);
-			if(waitKey(5)==27) 
+			if((waitKey(1)& 0XFF)==27) 
 			break;
 	}
 
