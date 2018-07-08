@@ -35,7 +35,7 @@ void datos();
 
 void Top10();
 void Menu();
-bool turn = false; 
+bool turn = true; 
 int alto = tam*columnas + espacio * 8.5;
 int ancho = tam *filas + espacio -2 ;
 Mat ventana(alto, ancho, CV_8UC3, negro);
@@ -63,15 +63,8 @@ struct Jugador
 	int win[200];
 }player;
 
-void MostratTop(){
-for (int i=0; i<10; i++){
-	cout<<player.name[i]<<endl;}
-
-}
-void puntaje(){
 
 
-}
 
 void leerDatos(){
 	int pt;
@@ -134,29 +127,7 @@ void datostxt(){
 
 
 void ordenTop(){
-	//PARA APLICAR EL PUNTO GANADOR
-	
-		for(int i=0; i<=200; i++){
-		
-				if (player.name[i]==J1nombre && player.aka[i]==J1alias){
-					player.win[i]++;
 
-
-					//cout <<player.win[i]+"  "<<player.name[i]+"  "+player.aka[i]<<endl;
-					break;
-			}
-
-		
-		else{
-			if (player.name[i]==J2nombre && player.aka[i]==J2alias){
-					player.win[i]++;
-					//cout <<player.win[i]+"  "<<player.name[i]+"  "+player.aka[i]<<endl;
-					break;
-			}
-		}
-		
-	
-}
 
 	for (int i=0; i<=200; i++){
 		for (int j=0; j<=199; j++){
@@ -180,33 +151,32 @@ void ordenTop(){
 }
 
 void llenarname(){
-
-
-
-	for (int i =0; i<200;i++){
-		if ((player.name[i]==J1nombre && player.aka[i]==J1alias) or (player.name[i]==J2nombre && player.aka[i]==J2alias)){
-			posicion=i;	
-			break;
-		
-		}
-		
-		
-		if (player.name[i]==""){
-			player.name[i]=J1nombre;
-			player.aka[i]=J1alias;
-			cout<< "Palabra es : "<<player.name[i]<<"   "+i<<endl<<"    "+player.aka[i]<<endl;
-			player.name[i+1]=J2nombre;
-			player.aka[i+1]=J2alias;
-			cout<< "Palabra es : "<<player.name[i+1]<<"   "+i+1<<endl<<"    "+player.aka[i+1]<<endl;
-			ordenTop();
-
-			break;
-		}
-		
+	string apodo,namae;
+	if(turn){
+		namae=J1nombre;
+		apodo=J1alias;
 	}
-	cout<<"Este es en llenarname:"<<endl;
-	//MostratTop();
-		//cout<< "Palabra es : "<<player.name[0];
+	else{
+		namae=J2nombre;
+		apodo=J2alias;
+	}
+
+	for(int i =0; i<200;i++){
+		if (player.name[i]==namae && player.aka[i]==apodo){
+			player.win[i]++;
+			ordenTop();
+			cout<<player.win[i];
+			break;
+		}
+		else if (player.name[i]==""){
+				player.name[i]=namae;
+				player.aka[i]=apodo;
+				player.win[i]++;
+				ordenTop();
+				break;
+		}
+		cout <<player.win[i]+"  "<<player.name[i]+"  "+player.aka[i]<<endl;
+	}
 }
 
 
@@ -375,7 +345,7 @@ void onMouse(int event, int x, int y, int, void*) {
 						
 					}}
 				}
-			else if (x>=110 && x<383 && y>=125 && y<=155)	{
+			else if (x>=110 && x<383 && y>=125 && y<=155 && J1nombre.length()!=0)	{
 				cout<<"cuadro de alias"<<endl;
 				
 					if (waitKey()){
@@ -392,7 +362,7 @@ void onMouse(int event, int x, int y, int, void*) {
 				}
 				}		
 							}
-			else if(x>=110 && x<383 && y>=245 && y<=275){
+			else if(x>=110 && x<383 && y>=245 && y<=275 && J1nombre.length()!=0 && J1alias.length()!=0){
 				cout<<"cuadro de nombre"<<endl;
 				
 				if (waitKey()){
@@ -405,7 +375,7 @@ void onMouse(int event, int x, int y, int, void*) {
 							cout<<J2nombre<<endl;
 							
 					}}}	
-			else if (x>=110 && x<383 && y>=305 && y<=335)	{
+			else if (x>=110 && x<383 && y>=305 && y<=335 && J1nombre.length()!=0 && J1alias.length()!=0 && J2nombre.length())	{
 				cout<<"cuadro de alias"<<endl;
 				
 					if (waitKey()){
@@ -783,6 +753,7 @@ void Top10(){
 		break;}
 
 }}
+
 
 void datos(){
 	
