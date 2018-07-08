@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 	
 using namespace std;
 using namespace cv;
@@ -17,7 +18,7 @@ using namespace cv;
 #define tamB 20
 
 string J1nombre,J2nombre,J1alias,J2alias;
-char temp;
+char aux;
 int m=1, dat=4;
 void x0(int, int, int);
 int tablero[8][8];
@@ -31,8 +32,9 @@ bool endgame = false;
 void check();
 void DibujarJuego();
 void datos();
-void SalidaDatos();
+
 void Top10();
+void Menu();
 bool turn = false; 
 int alto = tam*columnas + espacio * 8.5;
 int ancho = tam *filas + espacio -2 ;
@@ -40,11 +42,184 @@ Mat ventana(alto, ancho, CV_8UC3, negro);
 Mat Ins(400,400, CV_8UC3, negro);
 Mat Top(400,400, CV_8UC3, negro);
 
+
+
+//NUEVAS VARIABLES
+int temp1;
+string tempN,Njugador,Ajugador;
+string tempA;
+int posicion;
+
+
+//
+
+
+//Structura para Jugadores, aquí se guardarán los datos necesarios para hacer el TOP10
+
+struct Jugador
+{
+	string name[200];
+	string aka[200];
+	int win[200];
+}player;
+
+void MostratTop(){
+for (int i=0; i<10; i++){
+	cout<<player.name[i]<<endl;}
+
+}
+void puntaje(){
+
+
+}
+
+void leerDatos(){
+	int pt;
+	char c[5];
+	string score;
+	ifstream Datos("Datos.txt");
+	while(!Datos.eof()){
+		getline(Datos,score);
+		if(score.length()>=12) {
+			cout<<score<<endl;
+
+			for (int i=0; i<5;i++){
+				Njugador+=score.at(i);
+			}
+			for (int i=6; i<11;i++){
+				Ajugador+=score.at(i);
+			}
+			for (int i=12; i<score.length();i++){
+				c[i-12]=score.at(i);
+				pt=atoi(c);
+			}
+				for (int i =0; i<200;i++){ 
+
+					if (player.name[i].length()==0){
+						player.name[i]=Njugador;
+						player.aka[i]=Ajugador;
+						player.win[i]=pt;
+						//cout <<player.win[i]<<endl;cout <<player.aka[i]<<endl;cout <<player.name[i]<<endl;
+						Njugador="";
+						Ajugador="";
+						
+						break;
+					}
+				}
+		}
+	}
+	cout<<"Orden de Leer Datos: "<<endl;
+	//MostratTop();// lol
+}
+
+		
+
+void datostxt(){
+	int n=0;
+	//MostratTop():
+	ofstream Datos ("Datos.txt");
+	for (int i=0; i<200; i++){
+		if (player.name[i].length()!=0){
+			ostringstream os;
+			os<<player.win[n];
+		
+			Datos<<player.name[n]+"|"<<player.aka[n]+"|"<<os.str()+"\r\n";
+			n++;}
+
+	}
+	
+	//Nombre|AKA|puntaje
+	Datos.close();
+}
+
+
+void ordenTop(){
+	//PARA APLICAR EL PUNTO GANADOR
+	
+		for(int i=0; i<=200; i++){
+		
+				if (player.name[i]==J1nombre && player.aka[i]==J1alias){
+					player.win[i]++;
+
+
+					//cout <<player.win[i]+"  "<<player.name[i]+"  "+player.aka[i]<<endl;
+					break;
+			}
+
+		
+		else{
+			if (player.name[i]==J2nombre && player.aka[i]==J2alias){
+					player.win[i]++;
+					//cout <<player.win[i]+"  "<<player.name[i]+"  "+player.aka[i]<<endl;
+					break;
+			}
+		}
+		
+	
+}
+
+	for (int i=0; i<=200; i++){
+		for (int j=0; j<=199; j++){
+			if (player.win[j]<player.win[j+1]){
+			//ESTE CODIGO ES PARA ORDENAR EL WINS
+				temp1=player.win[j];
+				player.win[j]=player.win[j+1];
+				player.win[j+1]=temp1;
+			//ORDENAR EL NOMBRE
+				tempN=player.name[j];
+				player.name[j]=player.name[j+1];
+				player.name[j+1]=tempN;
+			// ORDENAR EL ALIAS
+				tempA=player.aka[j];
+				player.aka[j]=player.aka[j+1];
+				player.aka[j+1]=tempA;
+		}
+	}
+	}
+	datostxt();
+}
+
+void llenarname(){
+
+
+
+	for (int i =0; i<200;i++){
+		if ((player.name[i]==J1nombre && player.aka[i]==J1alias) or (player.name[i]==J2nombre && player.aka[i]==J2alias)){
+			posicion=i;	
+			break;
+		
+		}
+		
+		
+		if (player.name[i]==""){
+			player.name[i]=J1nombre;
+			player.aka[i]=J1alias;
+			cout<< "Palabra es : "<<player.name[i]<<"   "+i<<endl<<"    "+player.aka[i]<<endl;
+			player.name[i+1]=J2nombre;
+			player.aka[i+1]=J2alias;
+			cout<< "Palabra es : "<<player.name[i+1]<<"   "+i+1<<endl<<"    "+player.aka[i+1]<<endl;
+			ordenTop();
+
+			break;
+		}
+		
+	}
+	cout<<"Este es en llenarname:"<<endl;
+	//MostratTop();
+		//cout<< "Palabra es : "<<player.name[0];
+}
+
+
 //CODIGO DE AQUÍ EN ADELANTE ES ACERCA DEL JUEGO CONECT4 
 void llenar(){
     for(int a =0;a < 8; a++){        //llenar con 0 ambos arreglos 
         for(int b = 0; b<8; b++)  
-            tablero[a][b] = 0;}  
+            tablero[a][b] = 0;}
+	for (int i =0; i<200; i++){
+		player.win[i]=0;
+		player.name[i]= "";
+		player.aka[i]= "";
+	}              
     }
 
 void dibujarButtons(){
@@ -101,10 +276,12 @@ void kakuempate(){
 }
 
 void ganador(){
+	string winner;
+	winner=(turn? J1nombre:J2nombre);
         Mat ganador(200, 600, CV_8UC3, blanco);
-    putText(ganador, "El ganador es:"+J1alias , Point(5, 100), FONT_HERSHEY_SIMPLEX, 3, rojo);
+    putText(ganador, "El ganador es:"+winner, Point(5, 100), FONT_HERSHEY_SIMPLEX, 2.0, rojo);
     imshow("Ganador", ganador);
-
+    llenarname();
     endgame = true;
 }
 
@@ -124,7 +301,7 @@ void onMouse(int event, int x, int y, int, void*) {
 	if (endgame) return;
 	if(m==0){
 		if (event == EVENT_LBUTTONUP) {
-			for (int i = 0; i < filas; i++)
+			for (int i = 0; i < filas-1; i++)
 			{
 				int valor = tam*i + espacio;
 				if (x >= valor && x < valor + tam && y >= espacio && y <=tam + espacio) {
@@ -135,7 +312,7 @@ void onMouse(int event, int x, int y, int, void*) {
 	 				if (tablero[s][i]==0){
 	 					tablero[s][i]=(turn? 1:2);
 	 					dibujarMaru(x,y);
-	 					turn=!turn;
+	 					
 	 					break;
 	 						}
 	 				else if (tablero[s][i]!=0){
@@ -145,6 +322,9 @@ void onMouse(int event, int x, int y, int, void*) {
 
 	 				Empate();
 					check();
+					if (endgame==false){
+						turn=!turn;
+					}
 				bandera = true;
 			}
 		}
@@ -184,14 +364,17 @@ void onMouse(int event, int x, int y, int, void*) {
 				
 				if (waitKey()){
 					while (true){
-						if(J1nombre.length()==5 or waitKey()==13)break;
+						if(J1nombre.length()==5 or waitKey()==13){
+							break;}
 
-							temp=waitKey();
-							J1nombre+=temp;
+							aux=waitKey();
+							J1nombre+=putchar(toupper(aux));
 							putText(Ins,"-"+J1nombre,Point(115,90), FONT_HERSHEY_SIMPLEX,1,rojo);
 							cout<<J1nombre<<endl;
-							SalidaDatos();
-					}}}
+							
+						
+					}}
+				}
 			else if (x>=110 && x<383 && y>=125 && y<=155)	{
 				cout<<"cuadro de alias"<<endl;
 				
@@ -199,10 +382,11 @@ void onMouse(int event, int x, int y, int, void*) {
 						while (true){
 							if(J1alias.length()==5 or waitKey()==13)break;
 
-							temp=waitKey();
-							J1alias+=temp;
+							aux=waitKey();
+							J1alias+=putchar(toupper(aux));
 							putText(Ins,"-"+J1alias,Point(115,150), FONT_HERSHEY_SIMPLEX,1,rojo);
 							cout<<J1alias<<endl;
+					
 							
 
 				}
@@ -215,10 +399,11 @@ void onMouse(int event, int x, int y, int, void*) {
 					while (true){
 						if(J2nombre.length()==5 or waitKey()==13)break;
 
-							temp=waitKey();
-							J2nombre+=temp;
+							aux=waitKey();
+							J2nombre+=putchar(toupper(aux));
 							putText(Ins,"-"+J2nombre,Point(115,270), FONT_HERSHEY_SIMPLEX,1,rojo);
 							cout<<J2nombre<<endl;
+							
 					}}}	
 			else if (x>=110 && x<383 && y>=305 && y<=335)	{
 				cout<<"cuadro de alias"<<endl;
@@ -227,10 +412,11 @@ void onMouse(int event, int x, int y, int, void*) {
 						while (true){
 							if(J2alias.length()==5 or waitKey()==13)break;
 
-							temp=waitKey();
-							J2alias+=temp;
+							aux=waitKey();
+							J2alias+=putchar(toupper(aux));
 							putText(Ins,"-"+J2alias,Point(115,330), FONT_HERSHEY_SIMPLEX,1,rojo);
 							cout<<J1alias<<endl;
+							
 
 				}
 				}	
@@ -244,6 +430,10 @@ void onMouse(int event, int x, int y, int, void*) {
 
 }}
 else if (m==3){
+	if (event==EVENT_LBUTTONUP){
+		if (x>=140 && x<238 && y>=345 && y<=375){
+			m=1;
+			Menu();}}
 
 }
 }
@@ -265,22 +455,7 @@ void dibujarBmenu(Mat Menu){
 
 
 
-void Menu(){
-	Mat Menu (400,400,CV_8UC3,negro);
-	namedWindow("Ventana");
-	int option=0;
-	dibujarBmenu(Menu);
-	setMouseCallback("Ventana", onMouse);
 
-
-	while (m==1)
-	{
-		imshow("Ventana", Menu);
-		if (waitKey(5) == 27) 
-			break;
-		
-	}
-}
 //A PARTIR DE ACÁ SE USARÁ CODIGO DE EL SISTEMA DE INSCRIPCIÓN
 void Dibujarinscrip(Mat Ins){
 	putText(Ins,"Jugador 1", Point(10,30), FONT_HERSHEY_SIMPLEX,0.7,blanco);
@@ -307,10 +482,6 @@ void Dibujarinscrip(Mat Ins){
 		
 
 }
-void clasificacion(){
-
-
-}
 
 void DibujarTop(){
 	Rect  titulo (90,10,210,30);
@@ -319,33 +490,39 @@ void DibujarTop(){
 
 	Rect mune(140,345,100,30);
 	rectangle(Top,mune,rojo,CV_FILLED);
-
-	clasificacion();
-
 }
 
 
 
 
 int main(int argc, char const *argv[]) {
-	
+	llenar();
+	leerDatos();
 	Menu();
 	//DibujarJuego();
 
 	
 }
 
+void Menu(){
+	Mat Menu (400,400,CV_8UC3,negro);
+	namedWindow("Ventana");
+	int option=0;
+	dibujarBmenu(Menu);
+	setMouseCallback("Ventana", onMouse);
+
+
+	while (m==1)
+	{
+		imshow("Ventana", Menu);
+		if (waitKey(5) == 27) 
+			break;
+		
+	}
+}
 
 //DESDE AQUI SE CREA EL PUTO ARCHIVO CON LOS NOMBRES 
-void SalidaDatos(){
-	ofstream archivoTexto("Nombres.txt");
-	ofstream archivoTexto1("Wins.txt");
-	ofstream archivoTexto2("Alias.txt");
 
-
-
-
-}
 
 
 //Chequeo de ganar
@@ -620,6 +797,7 @@ void datos(){
 
 }
 void DibujarJuego(){
+	
 	namedWindow("Ventana");
 
 	setMouseCallback("Ventana", onMouse);
