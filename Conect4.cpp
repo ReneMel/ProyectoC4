@@ -41,6 +41,7 @@ int ancho = tam *filas + espacio -2 ;
 Mat ventana(alto, ancho, CV_8UC3, negro);
 Mat Ins(400,400, CV_8UC3, negro);
 Mat Top(400,400, CV_8UC3, negro);
+bool cerrar =false;
 
 
 
@@ -49,6 +50,7 @@ int temp1;
 string tempN,Njugador,Ajugador;
 string tempA;
 int posicion;
+String diez[10];
 
 
 //
@@ -67,15 +69,17 @@ struct Jugador
 
 
 void leerDatos(){
-	int pt;
+	int pt, r=0;
 	char c[5];
 	string score;
 	ifstream Datos("Datos.txt");
 	while(!Datos.eof()){
 		getline(Datos,score);
+		diez[r]=score;
+		r++;
 		if(score.length()>=12) {
-			cout<<score<<endl;
-
+			cout<<score<<endl;	
+			
 			for (int i=0; i<5;i++){
 				Njugador+=score.at(i);
 			}
@@ -323,6 +327,10 @@ void onMouse(int event, int x, int y, int, void*) {
 					
 					//Aquí irá la pantalla de puntuaciones, todavía no está hecha!
 				}
+				else if (x>=75 && x< 314 && y>=250 && y <=324){
+					cerrar=true;
+
+				}
 		}
 //sit
 	}
@@ -417,10 +425,13 @@ void dibujarBmenu(Mat Menu){
 	
 	Rect recPlay (75,63,240,73); 
 		rectangle(Menu, recPlay,rojo, CV_FILLED);
-		putText(Menu,"Jugar!",Point(105,115), FONT_HERSHEY_SIMPLEX,2,blanco);
+		putText(Menu,"Jugar!",Point(126,115), FONT_HERSHEY_SIMPLEX,1.5,blanco);
 	Rect recScore (75,158,240,73);
 		rectangle(Menu, recScore,rojo,CV_FILLED); 
 		putText(Menu,"Puntuacion",Point(81,210), FONT_HERSHEY_SIMPLEX,1.3,blanco);
+	Rect Exit (75,251,240,73);
+		rectangle(Menu,Exit,rojo,CV_FILLED); 
+		putText(Menu,"Exit",Point(150,305), FONT_HERSHEY_SIMPLEX,1.5,blanco);	
 }
 
 
@@ -463,8 +474,11 @@ void DibujarTop(){
 
 	int y=70;
 	for (int i=0; i<11; i++){
-		putText(Top, "-TOP 10-", Point(135,y), FONT_HERSHEY_TRIPLEX, 0.7, blanco);
-		y+=22;
+		if (diez[i].length()>=12){
+		putText(Top, diez[i], Point(95,y), FONT_HERSHEY_TRIPLEX, 0.6, blanco);
+		y+=30;
+	}
+		
 	}
 }
 
@@ -492,6 +506,8 @@ void Menu(){
 	{
 		imshow("Ventana", Menu);
 		if (waitKey(5) == 27) 
+			break;
+		if (cerrar)
 			break;
 		
 	}
@@ -752,7 +768,7 @@ void Top10(){
 	setMouseCallback("Ventana", onMouse);
 	DibujarTop(); 
 
-	while (true)
+	while (true )
 	{
 		imshow("Ventana", Top);
 		if (waitKey(10) == 27) {break;
