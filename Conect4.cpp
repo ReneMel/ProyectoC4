@@ -28,7 +28,6 @@ Scalar verde (0, 255, 0);
 Scalar rojo (0,0,255);
 Scalar azul (255,0,26);
 bool bandera = false;
-bool endgame = false;
 void check();
 void DibujarJuego();
 void datos();
@@ -36,12 +35,14 @@ void datos();
 void Top10();
 void Menu();
 bool turn = true; 
-int alto = tam*columnas + espacio * 8.5;
-int ancho = tam *filas + espacio -2 ;
+int alto = tam*8 + espacio * 8.2;
+int ancho = tam *9 - espacio ;
 Mat ventana(alto, ancho, CV_8UC3, negro);
 Mat Ins(400,400, CV_8UC3, negro);
 Mat Top(400,400, CV_8UC3, negro);
 bool cerrar =false;
+bool endgame=false;
+
 
 
 
@@ -52,10 +53,6 @@ string tempA;
 int posicion;
 String diez[10];
 
-
-//
-
-
 //Structura para Jugadores, aquí se guardarán los datos necesarios para hacer el TOP10
 
 struct Jugador
@@ -64,9 +61,6 @@ struct Jugador
 	string aka[200];
 	int win[200];
 }player;
-
-
-
 
 void leerDatos(){
 	int pt, r=0;
@@ -108,8 +102,6 @@ void leerDatos(){
 	cout<<"Orden de Leer Datos: "<<endl;
 	//MostratTop();// lol
 }
-
-		
 
 void datostxt(){
 	int n=0;
@@ -183,10 +175,9 @@ void llenarname(){
 	}
 }
 
-
 //CODIGO DE AQUÍ EN ADELANTE ES ACERCA DEL JUEGO CONECT4 
 void llenar(){
-    for(int a =0;a < 8; a++){        //llenar con 0 ambos arreglos 
+    for(int a =0;a < 8; a++){			        //llenar con 0 ambos arreglos 
         for(int b = 0; b<8; b++)  
             tablero[a][b] = 0;}
 	for (int i =0; i<200; i++){
@@ -209,6 +200,8 @@ void dibujarButtons(){
 		Point fin2(tam*i + espacio, tam*filasB + espacio);
 		line(ventana, inicio2, fin2, verde);
 	}
+	//AQUI PEDRROOOOOOO!!!!!
+
 	}
 
 void dibujartablero() {
@@ -236,10 +229,140 @@ void arr() {
         cout<<'\n';   
 	}}
 
-void dibujarMaru(int x, int y){
-	Point centro(x + tam / 2, y + tam / 2);
+void dibujarMaru(int i){
 	int radio = tam / 2 - espacio;
-	circle(ventana, centro, radio, (turn? verde:blanco)); }
+	int y=435;
+	int s=7;
+
+	if (i==0){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(35,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+	else if (i==1){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(85,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+	else if (i==2){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(135,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+	else if (i==3){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(185,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+	else if (i==4){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(235,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+	else if (i==5){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(285,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+	else if (i==6){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(335,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+	else if (i==7){
+		while(s>=0){
+			if (tablero[s][i]==0){
+	 			circle(ventana, Point(385,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			break;
+	 		}
+	 		else if (tablero[s][i]!=0){
+	 			s--;
+	 			y-=50;
+
+	 				}
+	 						
+
+		}
+		
+	}
+}
 
 void kakuempate(){
 	Mat Empate(200, 500, CV_8UC3, blanco);
@@ -253,29 +376,25 @@ void ganador(){
 	string winner;
 	winner=(turn? J1nombre:J2nombre);
         Mat ganador(200, 600, CV_8UC3, blanco);
-    putText(ganador, "El ganador es:"+winner, Point(5, 100), FONT_HERSHEY_SIMPLEX, 2.0, rojo);
+    putText(ganador, "El ganador es: "+winner, Point(5, 100), FONT_HERSHEY_SIMPLEX, 1.6, rojo);
     imshow("Ganador", ganador);
     llenarname();
     endgame = true;
 }
-
-
 
 void Empate(){
 	int lleno=0;
 	for (int i = 0; i < filas; i++)
         for (int j = 0; j < columnas; j++)
             if (tablero[i][j] != 0) lleno++;
-if ( !endgame && lleno==64)kakuempate();
-
+	if ( !endgame && lleno==64)kakuempate();
 }
-
 
 void onMouse(int event, int x, int y, int, void*) {
 	if (endgame) return;
 	if(m==0){
 		if (event == EVENT_LBUTTONUP) {
-			for (int i = 0; i < filas-1; i++)
+			for (int i = 0; i < filas; i++)
 			{
 				int valor = tam*i + espacio;
 				if (x >= valor && x < valor + tam && y >= espacio && y <=tam + espacio) {
@@ -284,8 +403,9 @@ void onMouse(int event, int x, int y, int, void*) {
                 y = tam * ((y - espacio) / tam) + espacio;
 				while (s>=0){
 	 				if (tablero[s][i]==0){
+	 					dibujarMaru(i);
 	 					tablero[s][i]=(turn? 1:2);
-	 					dibujarMaru(x,y);
+	 					
 	 					
 	 					break;
 	 						}
@@ -324,23 +444,22 @@ void onMouse(int event, int x, int y, int, void*) {
 				else if(x>=75 && x< 314 && y>=155 && y <=230){
 					m=3;
 					Top10();
-					
-					//Aquí irá la pantalla de puntuaciones, todavía no está hecha!
 				}
 				else if (x>=75 && x< 314 && y>=250 && y <=324){
 					cerrar=true;
 
 				}
 		}
-//sit
+	//sit
 	}
 	//Para ingreso de Datos
 	else if (m==2){
 		if (event==EVENT_LBUTTONUP){
 			if(x>=110 && x<383 && y>=65 && y<=95){
-				cout<<"cuadro de nombre"<<endl;
+				//cout<<"cuadro de nombre"<<endl;
 				
 				if (waitKey()){
+
 					while (true){
 						if(J1nombre.length()==5 or waitKey()==13){
 							break;}
@@ -348,7 +467,7 @@ void onMouse(int event, int x, int y, int, void*) {
 							aux=waitKey();
 							J1nombre+=putchar(toupper(aux));
 							putText(Ins,"-"+J1nombre,Point(115,90), FONT_HERSHEY_SIMPLEX,1,rojo);
-							cout<<J1nombre<<endl;
+							//cout<<J1nombre<<endl;
 							
 						
 					}}
@@ -363,7 +482,7 @@ void onMouse(int event, int x, int y, int, void*) {
 							aux=waitKey();
 							J1alias+=putchar(toupper(aux));
 							putText(Ins,"-"+J1alias,Point(115,150), FONT_HERSHEY_SIMPLEX,1,rojo);
-							cout<<J1alias<<endl;
+							//cout<<J1alias<<endl;
 					
 							
 
@@ -380,7 +499,7 @@ void onMouse(int event, int x, int y, int, void*) {
 							aux=waitKey();
 							J2nombre+=putchar(toupper(aux));
 							putText(Ins,"-"+J2nombre,Point(115,270), FONT_HERSHEY_SIMPLEX,1,rojo);
-							cout<<J2nombre<<endl;
+							//cout<<J2nombre<<endl;
 							
 					}}}	
 			else if (x>=110 && x<383 && y>=305 && y<=335 && J1nombre.length()!=0 && J1alias.length()!=0 && J2nombre.length())	{
@@ -393,7 +512,7 @@ void onMouse(int event, int x, int y, int, void*) {
 							aux=waitKey();
 							J2alias+=putchar(toupper(aux));
 							putText(Ins,"-"+J2alias,Point(115,330), FONT_HERSHEY_SIMPLEX,1,rojo);
-							cout<<J1alias<<endl;
+							//cout<<J1alias<<endl;
 							
 
 				}
@@ -406,21 +525,18 @@ void onMouse(int event, int x, int y, int, void*) {
 			}
 
 
-}}
-else if (m==3){
+	}}
+	else if (m==3){
 	if (event==EVENT_LBUTTONUP){
 		if (x>=140 && x<238 && y>=345 && y<=375){
 			m=1;
 			Menu();}}
-
+	}
 }
-}
-
-
 
 //CODIGO DE AQÚI EN ADELANTE ES SOBRE EL MENU!!!!!
 void dibujarBmenu(Mat Menu){
-	putText(Menu, "-Conect 4-", Point(10,50), FONT_HERSHEY_SCRIPT_SIMPLEX, 2, verde);
+	putText(Menu, "-Connect 4-", Point(10,50), FONT_HERSHEY_SCRIPT_SIMPLEX, 2, verde);
     //imshow("Empate", Menu);
 	
 	Rect recPlay (75,63,240,73); 
@@ -433,9 +549,6 @@ void dibujarBmenu(Mat Menu){
 		rectangle(Menu,Exit,rojo,CV_FILLED); 
 		putText(Menu,"Exit",Point(150,305), FONT_HERSHEY_SIMPLEX,1.5,blanco);	
 }
-
-
-
 
 //A PARTIR DE ACÁ SE USARÁ CODIGO DE EL SISTEMA DE INSCRIPCIÓN
 void Dibujarinscrip(Mat Ins){
@@ -460,8 +573,6 @@ void Dibujarinscrip(Mat Ins){
 		Rect Juego(120,355,155,35);
 		rectangle(Ins,Juego,rojo,CV_FILLED);
 	putText(Ins, "Iniciar Juego!",Point(125,380), FONT_HERSHEY_SIMPLEX, 0.7, verde);
-		
-
 }
 
 void DibujarTop(){
@@ -471,27 +582,24 @@ void DibujarTop(){
 
 	Rect mune(140,345,100,30);
 	rectangle(Top,mune,rojo,CV_FILLED);
+	putText(Top,"Menu",Point(150,370), FONT_HERSHEY_SIMPLEX, 0.8, blanco);
+	putText(Top,"Menu",Point(150,370), FONT_HERSHEY_SIMPLEX, 0.8, blanco);
 
-	int y=70;
+	int y=85;
 	for (int i=0; i<11; i++){
-		if (diez[i].length()>=12){
-		putText(Top, diez[i], Point(95,y), FONT_HERSHEY_TRIPLEX, 0.6, blanco);
-		y+=30;
+		if (player.name[i].length()>=0){
+		putText(Top, player.aka[i], Point(90,y),FONT_HERSHEY_PLAIN, 1.1, blanco);
+		y+=25;
 	}
 		
 	}
 }
-
-
-
 
 int main(int argc, char const *argv[]) {
 	llenar();
 	leerDatos();
 	Menu();
 	//DibujarJuego();
-
-	
 }
 
 void Menu(){
@@ -513,12 +621,9 @@ void Menu(){
 	}
 }
 
-//DESDE AQUI SE CREA EL PUTO ARCHIVO CON LOS NOMBRES 
+//DESDE AQUI SE CREA EL ARCHIVO CON LOS NOMBRES 
 
-
-
-//Chequeo de ganar
- void check () {
+void check () {
  //filas
  for (int i=0; i<=7; i++){
     for (int j=0; j<=7;j++){
@@ -527,8 +632,8 @@ void Menu(){
             ganador();
             !endgame;}
     }
-}
- //columnas
+	}
+ 	//columnas
  for (int i=0; i<=7; i++){
     for (int j=0; j<=7;j++){
            
@@ -536,231 +641,226 @@ void Menu(){
             ganador();
             !endgame;}
     }
-}
-//diagonales izquierda a derecha
-if(tablero[0][4]==tablero[1][5] && tablero[2][6]==tablero[3][7] && tablero[0][4] == tablero[3][7] && tablero[0][4] !=0){
+	//diagonales izquierda a derecha
+	if(tablero[0][4]==tablero[1][5] && tablero[2][6]==tablero[3][7] && tablero[0][4] == tablero[3][7] && tablero[0][4] !=0){
             ganador();
-            !endgame;}
+            !endgame;
+
+        }
  
-else if(tablero[0][3]==tablero[1][4] && tablero[2][5]==tablero[3][6] && tablero[0][3] == tablero[3][6] && tablero[0][3] !=0){
+	else if(tablero[0][3]==tablero[1][4] && tablero[2][5]==tablero[3][6] && tablero[0][3] == tablero[3][6] && tablero[0][3] !=0){
             ganador();
             !endgame;}  
  
-else if(tablero[1][4]==tablero[2][5] && tablero[3][6]==tablero[4][7] && tablero[1][4] == tablero[4][7] && tablero[1][4] !=0){
+	else if(tablero[1][4]==tablero[2][5] && tablero[3][6]==tablero[4][7] && tablero[1][4] == tablero[4][7] && tablero[1][4] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[0][2]==tablero[1][3] && tablero[2][4]==tablero[3][5] && tablero[0][2] == tablero[3][5] && tablero[0][2] !=0){
+	else if(tablero[0][2]==tablero[1][3] && tablero[2][4]==tablero[3][5] && tablero[0][2] == tablero[3][5] && tablero[0][2] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[1][3]==tablero[2][4] && tablero[3][5]==tablero[4][6] && tablero[1][3] == tablero[4][6] && tablero[1][3] !=0){
+	else if(tablero[1][3]==tablero[2][4] && tablero[3][5]==tablero[4][6] && tablero[1][3] == tablero[4][6] && tablero[1][3] !=0){
             ganador();
             !endgame;}  
 
-else if(tablero[2][4]==tablero[3][5] && tablero[4][6]==tablero[5][7] && tablero[2][4] == tablero[5][7] && tablero[2][4] !=0){
+	else if(tablero[2][4]==tablero[3][5] && tablero[4][6]==tablero[5][7] && tablero[2][4] == tablero[5][7] && tablero[2][4] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[0][1]==tablero[1][2] && tablero[2][3]==tablero[3][4] && tablero[0][1] == tablero[3][4] && tablero[0][1] !=0){
+	else if(tablero[0][1]==tablero[1][2] && tablero[2][3]==tablero[3][4] && tablero[0][1] == tablero[3][4] && tablero[0][1] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[1][2]==tablero[2][3] && tablero[3][4]==tablero[4][5] && tablero[1][2] == tablero[4][5] && tablero[1][2] !=0){
+	else if(tablero[1][2]==tablero[2][3] && tablero[3][4]==tablero[4][5] && tablero[1][2] == tablero[4][5] && tablero[1][2] !=0){
             ganador();
             !endgame;} 
 
-else if(tablero[2][3]==tablero[3][4] && tablero[4][5]==tablero[5][6] && tablero[2][3] == tablero[5][6] && tablero[2][3] !=0){
+	else if(tablero[2][3]==tablero[3][4] && tablero[4][5]==tablero[5][6] && tablero[2][3] == tablero[5][6] && tablero[2][3] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[3][4]==tablero[4][5] && tablero[5][6]==tablero[6][7] && tablero[3][4] == tablero[6][7] && tablero[3][4] !=0) {
+	else if(tablero[3][4]==tablero[4][5] && tablero[5][6]==tablero[6][7] && tablero[3][4] == tablero[6][7] && tablero[3][4] !=0) {
             ganador();
             !endgame;}
    
-else if(tablero[0][0]==tablero[1][1] && tablero[2][2]==tablero[3][3] && tablero[0][0] == tablero[3][3] && tablero[0][0] !=0){
+	else if(tablero[0][0]==tablero[1][1] && tablero[2][2]==tablero[3][3] && tablero[0][0] == tablero[3][3] && tablero[0][0] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[1][1]==tablero[2][2] && tablero[3][3]==tablero[4][4] && tablero[1][1] == tablero[4][4] && tablero[1][1] !=0){
+	else if(tablero[1][1]==tablero[2][2] && tablero[3][3]==tablero[4][4] && tablero[1][1] == tablero[4][4] && tablero[1][1] !=0){
             ganador();
             !endgame;}  
  
-else if(tablero[2][2]==tablero[3][3] && tablero[4][4]==tablero[5][5] && tablero[2][2] == tablero[5][5] && tablero[2][2] !=0){
+	else if(tablero[2][2]==tablero[3][3] && tablero[4][4]==tablero[5][5] && tablero[2][2] == tablero[5][5] && tablero[2][2] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[3][3]==tablero[4][4] && tablero[5][5]==tablero[6][6] && tablero[3][3] == tablero[6][6] && tablero[3][3] !=0){
+	else if(tablero[3][3]==tablero[4][4] && tablero[5][5]==tablero[6][6] && tablero[3][3] == tablero[6][6] && tablero[3][3] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[4][4]==tablero[5][5] && tablero[6][6]==tablero[7][7] && tablero[4][4] == tablero[7][7] && tablero[4][4] !=0){
+	else if(tablero[4][4]==tablero[5][5] && tablero[6][6]==tablero[7][7] && tablero[4][4] == tablero[7][7] && tablero[4][4] !=0){
             ganador();
             !endgame;}  
 
-else if(tablero[2][4]==tablero[3][5] && tablero[4][6]==tablero[5][7] && tablero[2][4] == tablero[5][7] && tablero[2][4] !=0){
+	else if(tablero[2][4]==tablero[3][5] && tablero[4][6]==tablero[5][7] && tablero[2][4] == tablero[5][7] && tablero[2][4] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[0][1]==tablero[1][2] && tablero[2][3]==tablero[3][4] && tablero[0][1] == tablero[3][4] && tablero[0][1] !=0){
+	else if(tablero[0][1]==tablero[1][2] && tablero[2][3]==tablero[3][4] && tablero[0][1] == tablero[3][4] && tablero[0][1] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[1][0]==tablero[2][1] && tablero[3][2]==tablero[4][3] && tablero[1][0] == tablero[4][3] && tablero[1][0] !=0){
+	else if(tablero[1][0]==tablero[2][1] && tablero[3][2]==tablero[4][3] && tablero[1][0] == tablero[4][3] && tablero[1][0] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[2][1]==tablero[3][2] && tablero[4][3]==tablero[5][4] && tablero[2][1] == tablero[5][4] && tablero[2][1] !=0){
+	else if(tablero[2][1]==tablero[3][2] && tablero[4][3]==tablero[5][4] && tablero[2][1] == tablero[5][4] && tablero[2][1] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[3][2]==tablero[4][3] && tablero[5][4]==tablero[6][5] && tablero[3][2] == tablero[6][5] && tablero[3][2] !=0){
+	else if(tablero[3][2]==tablero[4][3] && tablero[5][4]==tablero[6][5] && tablero[3][2] == tablero[6][5] && tablero[3][2] !=0){
             ganador();
             !endgame;}  
  
-else if(tablero[4][3]==tablero[5][4] && tablero[6][5]==tablero[7][6] && tablero[4][3] == tablero[7][6] && tablero[4][3] !=0){
+	else if(tablero[4][3]==tablero[5][4] && tablero[6][5]==tablero[7][6] && tablero[4][3] == tablero[7][6] && tablero[4][3] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[2][0]==tablero[3][1] && tablero[4][2]==tablero[5][3] && tablero[2][0] == tablero[5][3] && tablero[2][0] !=0){
+	else if(tablero[2][0]==tablero[3][1] && tablero[4][2]==tablero[5][3] && tablero[2][0] == tablero[5][3] && tablero[2][0] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[3][1]==tablero[4][2] && tablero[5][3]==tablero[6][4] && tablero[3][1] == tablero[6][4] && tablero[3][1] !=0){
+	else if(tablero[3][1]==tablero[4][2] && tablero[5][3]==tablero[6][4] && tablero[3][1] == tablero[6][4] && tablero[3][1] !=0){
             ganador();
             !endgame;}  
 
-else if(tablero[4][2]==tablero[5][3] && tablero[6][4]==tablero[7][5] && tablero[4][2] == tablero[7][5] && tablero[4][2] !=0){
+	else if(tablero[4][2]==tablero[5][3] && tablero[6][4]==tablero[7][5] && tablero[4][2] == tablero[7][5] && tablero[4][2] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[3][0]==tablero[4][1] && tablero[5][2]==tablero[6][3] && tablero[3][0] == tablero[6][3] && tablero[3][0] !=0){
+	else if(tablero[3][0]==tablero[4][1] && tablero[5][2]==tablero[6][3] && tablero[3][0] == tablero[6][3] && tablero[3][0] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[4][1]==tablero[5][2] && tablero[6][3]==tablero[7][4] && tablero[4][1] == tablero[7][4] && tablero[4][1] !=0){
+	else if(tablero[4][1]==tablero[5][2] && tablero[6][3]==tablero[7][4] && tablero[4][1] == tablero[7][4] && tablero[4][1] !=0){
             ganador();
             !endgame;} 
 
-else if(tablero[4][0]==tablero[5][1] && tablero[6][2]==tablero[7][3] && tablero[4][0] == tablero[7][3] && tablero[4][0] !=0){
+	else if(tablero[4][0]==tablero[5][1] && tablero[6][2]==tablero[7][3] && tablero[4][0] == tablero[7][3] && tablero[4][0] !=0){
             ganador();
             !endgame;}
 
-//diagonales de derecha a izquierda
+	//diagonales de derecha a izquierda
  
-else if(tablero[7][4]==tablero[6][5] && tablero[5][6]==tablero[4][7] && tablero[7][4] == tablero[4][7] && tablero[7][4] !=0) {
+	else if(tablero[7][4]==tablero[6][5] && tablero[5][6]==tablero[4][7] && tablero[7][4] == tablero[4][7] && tablero[7][4] !=0) {
             ganador();
             !endgame;}
    
-else if(tablero[7][3]==tablero[6][4] && tablero[5][5]==tablero[4][6] && tablero[7][3] == tablero[4][6] && tablero[7][3] !=0){
+	else if(tablero[7][3]==tablero[6][4] && tablero[5][5]==tablero[4][6] && tablero[7][3] == tablero[4][6] && tablero[7][3] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[6][4]==tablero[5][5] && tablero[4][6]==tablero[3][7] && tablero[6][4] == tablero[3][7] && tablero[6][4] !=0){
+	else if(tablero[6][4]==tablero[5][5] && tablero[4][6]==tablero[3][7] && tablero[6][4] == tablero[3][7] && tablero[6][4] !=0){
             ganador();
             !endgame;}  
  
-else if(tablero[7][2]==tablero[6][3] && tablero[5][4]==tablero[4][5] && tablero[7][2] == tablero[4][5] && tablero[7][2] !=0){
+	else if(tablero[7][2]==tablero[6][3] && tablero[5][4]==tablero[4][5] && tablero[7][2] == tablero[4][5] && tablero[7][2] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[6][3]==tablero[5][4] && tablero[4][5]==tablero[3][6] && tablero[6][3] == tablero[3][6] && tablero[6][3] !=0){
+	else if(tablero[6][3]==tablero[5][4] && tablero[4][5]==tablero[3][6] && tablero[6][3] == tablero[3][6] && tablero[6][3] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[5][4]==tablero[4][5] && tablero[3][6]==tablero[1][7] && tablero[5][4] == tablero[2][7] && tablero[4][4] !=0){
+	else if(tablero[5][4]==tablero[4][5] && tablero[3][6]==tablero[1][7] && tablero[5][4] == tablero[2][7] && tablero[4][4] !=0){
             ganador();
             !endgame;}  
 
-else if(tablero[7][1]==tablero[6][2] && tablero[5][3]==tablero[4][4] && tablero[7][1] == tablero[4][4] && tablero[7][1] !=0){
+	else if(tablero[7][1]==tablero[6][2] && tablero[5][3]==tablero[4][4] && tablero[7][1] == tablero[4][4] && tablero[7][1] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[6][2]==tablero[5][3] && tablero[4][4]==tablero[3][5] && tablero[6][2] == tablero[3][5] && tablero[6][2] !=0){
+	else if(tablero[6][2]==tablero[5][3] && tablero[4][4]==tablero[3][5] && tablero[6][2] == tablero[3][5] && tablero[6][2] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[5][3]==tablero[4][4] && tablero[3][5]==tablero[2][6] && tablero[5][3] == tablero[2][6] && tablero[5][3] !=0){
+	else if(tablero[5][3]==tablero[4][4] && tablero[3][5]==tablero[2][6] && tablero[5][3] == tablero[2][6] && tablero[5][3] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[4][4]==tablero[3][5] && tablero[2][6]==tablero[1][7] && tablero[4][4] == tablero[1][7] && tablero[4][4] !=0){
+	else if(tablero[4][4]==tablero[3][5] && tablero[2][6]==tablero[1][7] && tablero[4][4] == tablero[1][7] && tablero[4][4] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[7][0]==tablero[6][1] && tablero[5][2]==tablero[4][3] && tablero[7][0] == tablero[4][3] && tablero[7][0] !=0) {
+	else if(tablero[7][0]==tablero[6][1] && tablero[5][2]==tablero[4][3] && tablero[7][0] == tablero[4][3] && tablero[7][0] !=0) {
             ganador();
             !endgame;}
    
-else if(tablero[6][1]==tablero[5][2] && tablero[4][3]==tablero[3][4] && tablero[6][1] == tablero[5][2] && tablero[6][1] !=0){
+	else if(tablero[6][1]==tablero[5][2] && tablero[4][3]==tablero[3][4] && tablero[6][1] == tablero[3][4] && tablero[6][1] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[5][2]==tablero[4][3] && tablero[3][4]==tablero[2][5] && tablero[5][2] == tablero[2][5] && tablero[5][2] !=0){
+	else if(tablero[5][2]==tablero[4][3] && tablero[3][4]==tablero[2][5] && tablero[5][2] == tablero[2][5] && tablero[5][2] !=0){
             ganador();
             !endgame;}  
  
-else if(tablero[4][3]==tablero[3][4] && tablero[2][5]==tablero[1][6] && tablero[4][3] == tablero[1][6] && tablero[4][3] !=0){
+	else if(tablero[4][3]==tablero[3][4] && tablero[2][5]==tablero[1][6] && tablero[4][3] == tablero[1][6] && tablero[4][3] !=0){
             ganador();
             !endgame;}
  
- //error BUG
  
-else if(tablero[0][7]==tablero[1][6] && tablero[2][5]==tablero[3][4] && tablero[0][7] == tablero[3][4] && tablero[0][7] !=0){
+	else if(tablero[0][7]==tablero[1][6] && tablero[2][5]==tablero[3][4] && tablero[0][7] == tablero[3][4] && tablero[0][7] !=0){
     ganador();
     !endgame;
-}
- 
-//error BUG
- 
- 
-else if(tablero[6][0]==tablero[5][1] && tablero[4][2]==tablero[3][3] && tablero[6][0] == tablero[3][3] && tablero[6][0] !=0){
+	}
+  
+	else if(tablero[6][0]==tablero[5][1] && tablero[4][2]==tablero[3][3] && tablero[6][0] == tablero[3][3] && tablero[6][0] !=0){
             ganador();
             !endgame;}  
 
-else if(tablero[5][1]==tablero[4][2] && tablero[3][3]==tablero[2][4] && tablero[5][1] == tablero[2][4] && tablero[5][1] !=0){
+	else if(tablero[5][1]==tablero[4][2] && tablero[3][3]==tablero[2][4] && tablero[5][1] == tablero[2][4] && tablero[5][1] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[4][2]==tablero[3][3] && tablero[2][4]==tablero[1][5] && tablero[4][2] == tablero[1][5] && tablero[4][2] !=0){
+	else if(tablero[4][2]==tablero[3][3] && tablero[2][4]==tablero[1][5] && tablero[4][2] == tablero[1][5] && tablero[4][2] !=0){
             ganador();
             !endgame;}
 
-else if(tablero[3][3]==tablero[2][4] && tablero[1][5]==tablero[0][6] && tablero[3][3] == tablero[0][6] && tablero[3][3] !=0){
+	else if(tablero[3][3]==tablero[2][4] && tablero[1][5]==tablero[0][6] && tablero[3][3] == tablero[0][6] && tablero[3][3] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[5][0]==tablero[4][1] && tablero[3][2]==tablero[2][3] && tablero[5][0] == tablero[2][3] && tablero[5][0] !=0){
+	else if(tablero[5][0]==tablero[4][1] && tablero[3][2]==tablero[2][3] && tablero[5][0] == tablero[2][3] && tablero[5][0] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[4][1]==tablero[3][2] && tablero[2][3]==tablero[1][4] && tablero[4][1] == tablero[1][4] && tablero[4][1] !=0) {
+	else if(tablero[4][1]==tablero[3][2] && tablero[2][3]==tablero[1][4] && tablero[4][1] == tablero[1][4] && tablero[4][1] !=0) {
             ganador();
             !endgame;}
    
-else if(tablero[3][2]==tablero[2][3] && tablero[1][4]==tablero[0][5] && tablero[3][2] == tablero[0][5] && tablero[3][2] !=0){
+	else if(tablero[3][2]==tablero[2][3] && tablero[1][4]==tablero[0][5] && tablero[3][2] == tablero[0][5] && tablero[3][2] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[4][0]==tablero[3][1] && tablero[2][2]==tablero[1][3] && tablero[4][0] == tablero[1][3] && tablero[4][0] !=0){
+	else if(tablero[4][0]==tablero[3][1] && tablero[2][2]==tablero[1][3] && tablero[4][0] == tablero[1][3] && tablero[4][0] !=0){
             ganador();
             !endgame;}  
  
-else if(tablero[3][1]==tablero[2][2] && tablero[1][3]==tablero[0][4] && tablero[3][1] == tablero[0][4] && tablero[3][1] !=0){
+	else if(tablero[3][1]==tablero[2][2] && tablero[1][3]==tablero[0][4] && tablero[3][1] == tablero[0][4] && tablero[3][1] !=0){
             ganador();
             !endgame;}
  
-else if(tablero[3][0]==tablero[2][1] && tablero[1][2]==tablero[0][3] && tablero[3][0] == tablero[0][3] && tablero[3][0] !=0){
+	else if(tablero[3][0]==tablero[2][1] && tablero[1][2]==tablero[0][3] && tablero[3][0] == tablero[0][3] && tablero[3][0] !=0){
             ganador();
             !endgame;}
  
  
  
  
- //check final
- }
-
-
+ 	//check final
+ }}
 
 void Top10(){
 	namedWindow("Ventana");
@@ -773,9 +873,7 @@ void Top10(){
 		imshow("Ventana", Top);
 		if (waitKey(10) == 27) {break;
 		break;}
-
 }}
-
 
 void datos(){
 	
@@ -787,8 +885,8 @@ void datos(){
 			if((waitKey(1)& 0XFF)==27) 
 			break;
 	}
-
 }
+
 void DibujarJuego(){
 	
 	namedWindow("Ventana");
@@ -801,9 +899,8 @@ void DibujarJuego(){
 	while (true)
 	{
 		imshow("Ventana", ventana);
-		if (waitKey(10) == 27) {break;
-		break;}
+		if (waitKey(10) == 27) break;
+		
 		
 	}
-
 }
