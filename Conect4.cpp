@@ -475,11 +475,14 @@ void onMouse(int event, int x, int y, int, void*) {
 				//cout<<"cuadro de nombre"<<endl;
 				int cont1=0,cont2=0,cont3=0,cont4=0;
 				if (waitKey()){
+					
+
 					while (true && cont1==0){
-						if(J1nombre.length()==5 or waitKey()==13){
+						aux=waitKey();
+						if(J1nombre.length()==5 or aux==13){
 							break;}
 
-							aux=waitKey();
+							//aux=waitKey();
 							J1nombre+=putchar(toupper(aux));
 							putText(Ins,"-"+J1nombre,Point(115,90), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J1nombre<<endl;
@@ -492,9 +495,10 @@ void onMouse(int event, int x, int y, int, void*) {
 				
 					if (waitKey()){
 						while (true){
-							if(J1alias.length()==5 or waitKey()==13)break;
-
 							aux=waitKey();
+							if(J1alias.length()==5 or aux==13)break;
+
+							//aux=waitKey();
 							J1alias+=putchar(toupper(aux));
 							putText(Ins,"-"+J1alias,Point(115,150), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J1alias<<endl;
@@ -509,9 +513,10 @@ void onMouse(int event, int x, int y, int, void*) {
 				
 				if (waitKey()){
 					while (true){
-						if(J2nombre.length()==5 or waitKey()==13)break;
+						aux=waitKey();
+						if(J2nombre.length()==5 or aux==13)break;
 
-							aux=waitKey();
+
 							J2nombre+=putchar(toupper(aux));
 							putText(Ins,"-"+J2nombre,Point(115,270), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J2nombre<<endl;
@@ -522,9 +527,10 @@ void onMouse(int event, int x, int y, int, void*) {
 				
 					if (waitKey()){
 						while (true){
-							if(J2alias.length()==5 or waitKey()==13)break;
-
 							aux=waitKey();
+							if(J2alias.length()==5 or aux==13)break;
+
+							
 							J2alias+=putchar(toupper(aux));
 							putText(Ins,"-"+J2alias,Point(115,330), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J1alias<<endl;
@@ -547,6 +553,7 @@ void onMouse(int event, int x, int y, int, void*) {
 			m=1;
 			Menu();}}
 	}
+			//cout <<m<<endl<<(cerrar? "Hola":"HolaF")<<endl;
 }
 
 //CODIGO DE AQÚI EN ADELANTE ES SOBRE EL MENU!!!!!
@@ -557,8 +564,8 @@ void dibujarBmenu(Mat Menu){
 	Rect recPlay (75,63,240,73); 
 		rectangle(Menu, recPlay,rojo, CV_FILLED);
 		putText(Menu,"Jugar!",Point(126,115), FONT_HERSHEY_SIMPLEX,1.5,blanco);
-	Rect recScore (75,158,240,73);
-		rectangle(Menu, recScore,rojo,CV_FILLED); 
+	Rect recScore (75,158,240,73)
+;		rectangle(Menu, recScore,rojo,CV_FILLED); 
 		putText(Menu,"Puntuacion",Point(81,210), FONT_HERSHEY_SIMPLEX,1.3,blanco);
 	Rect Exit (75,251,240,73);
 		rectangle(Menu,Exit,rojo,CV_FILLED); 
@@ -576,12 +583,12 @@ void Dibujarinscrip(Mat Ins){
 		Rect recAlias1 (110,125,275,30);
 		rectangle(Ins,recAlias1,blanco,CV_FILLED);
 
-	putText(Ins,"Jugador 2", Point(10,210), FONT_HERSHEY_SIMPLEX,0.7,blanco);
+	putText(Ins,"Jugador 2", Point(10,210), FONT_HERSHEY_SIMPLEX,0.7,naranja);
 	
-	putText(Ins,"Nombre: ", Point(10,265), FONT_HERSHEY_SIMPLEX,0.7,blanco);
+	putText(Ins,"Nombre: ", Point(10,265), FONT_HERSHEY_SIMPLEX,0.7,naranja);
 		Rect recNamae2 (110,245,275,30); 
 		rectangle(Ins, recNamae2,blanco,CV_FILLED);
-	putText(Ins,"Alias: ", Point(10,325), FONT_HERSHEY_SIMPLEX,0.7,blanco);
+	putText(Ins,"Alias: ", Point(10,325), FONT_HERSHEY_SIMPLEX,0.7,naranja);
 		Rect recAlias2 (110,305,275,30);
 		rectangle(Ins,recAlias2,blanco,CV_FILLED);
 
@@ -902,6 +909,8 @@ void Top10(){
 		imshow("Ventana", Top);
 		if (waitKey(10) == 27) {break;
 		break;}
+				if (cerrar)
+			break;
 }}
 
 void datos(){
@@ -912,6 +921,8 @@ void datos(){
 	while(true){
 		imshow("Ventana",Ins);
 			if((waitKey(1)& 0XFF)==27) 
+			break;
+				if (cerrar)
 			break;
 	}
 }
@@ -929,6 +940,8 @@ void DibujarJuego(){
 	{
 		imshow("Ventana", ventana);
 		if (waitKey(10) == 27) break;
+				if (cerrar)
+			break;
 		
 		
 	}
