@@ -508,7 +508,7 @@ void Menu(){
 	while (m==1)
 	{
 		imshow("Ventana", Menu);
-		if (waitKey(5) == 27) 
+		if ((waitKey(5) == 27)& 0XFF) 
 			break;
 		
 	}
@@ -522,7 +522,7 @@ void Menu(){
  void check () {
  //filas
  for (int i=0; i<=7; i++){
-    for (int j=0; j<=7;j++){
+    for (int j=0; j<5;j++){
            
             if(tablero[i][j]==tablero[i][j+1] && tablero[i][j+2]==tablero[i][j+3] && tablero[i][j] == tablero[i][j+3] && tablero[i][j] !=0) {
             ganador();
@@ -530,14 +530,18 @@ void Menu(){
     }
 }
  //columnas
- for (int i=0; i<=7; i++){
+ for (int i=0; i<5; i++){
     for (int j=0; j<=7;j++){
            
             if(tablero[i][j]==tablero[i+1][j] && tablero[i+2][j]==tablero[i+3][j] && tablero[i][j] == tablero[i+3][j] && tablero[i][j] !=0) {
             ganador();
             !endgame;}
     }
+
 }
+
+
+/*
 //diagonales izquierda a derecha
 if(tablero[0][4]==tablero[1][5] && tablero[2][6]==tablero[3][7] && tablero[0][4] == tablero[3][7] && tablero[0][4] !=0){
             ganador();
@@ -754,7 +758,7 @@ else if(tablero[3][1]==tablero[2][2] && tablero[1][3]==tablero[0][4] && tablero[
 else if(tablero[3][0]==tablero[2][1] && tablero[1][2]==tablero[0][3] && tablero[3][0] == tablero[0][3] && tablero[3][0] !=0){
             ganador();
             !endgame;}
- 
+ */
  
  
  
@@ -772,7 +776,7 @@ void Top10(){
 	while (true)
 	{
 		imshow("Ventana", Top);
-		if (waitKey(10) == 27) {break;
+		if ((waitKey(10) == 27)& 0XFF) {break;
 		break;}
 
 }}
@@ -785,7 +789,7 @@ void datos(){
 
 	while(true){
 		imshow("Ventana",Ins);
-			if(waitKey(5)==27) 
+			if ((waitKey(10) == 27)& 0XFF) 
 			break;
 	}
 
@@ -802,7 +806,7 @@ void DibujarJuego(){
 	while (true)
 	{
 		imshow("Ventana", ventana);
-		if (waitKey(10) == 27) {break;
+		if ((waitKey(10) == 27)& 0XFF){
 		break;}
 		
 	}

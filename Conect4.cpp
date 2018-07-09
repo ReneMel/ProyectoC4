@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <sstream>
+//#include <sstream>
 	
 using namespace std;
 using namespace cv;
@@ -27,6 +27,8 @@ Scalar blanco(255, 255, 255);
 Scalar verde (0, 255, 0);
 Scalar rojo (0,0,255);
 Scalar azul (255,0,26);
+Scalar amarillo(204,255,255);
+Scalar naranja(0,102,204);
 bool bandera = false;
 void check();
 void DibujarJuego();
@@ -37,11 +39,12 @@ void Menu();
 bool turn = true; 
 int alto = tam*8 + espacio * 8.2;
 int ancho = tam *9 - espacio ;
-Mat ventana(alto, ancho, CV_8UC3, negro);
-Mat Ins(400,400, CV_8UC3, negro);
+Mat ventana(alto, ancho, CV_8UC3, amarillo);
+Mat Ins(400,400, CV_8UC3, Scalar(204,204,255));
 Mat Top(400,400, CV_8UC3, negro);
 bool cerrar =false;
 bool endgame=false;
+bool orden=false;
 
 
 
@@ -72,7 +75,7 @@ void leerDatos(){
 		diez[r]=score;
 		r++;
 		if(score.length()>=12) {
-			cout<<score<<endl;	
+			//cout<<score<<endl;	
 			
 			for (int i=0; i<5;i++){
 				Njugador+=score.at(i);
@@ -99,7 +102,8 @@ void leerDatos(){
 				}
 		}
 	}
-	cout<<"Orden de Leer Datos: "<<endl;
+	Datos.close();
+	//cout<<"Orden de Leer Datos: "<<endl;
 	//MostratTop();// lol
 }
 
@@ -116,7 +120,7 @@ void datostxt(){
 			n++;}
 
 	}
-	
+	orden=false;
 	//Nombre|AKA|puntaje
 	Datos.close();
 }
@@ -143,11 +147,13 @@ void ordenTop(){
 		}
 	}
 	}
-	datostxt();
+	orden=true;
+	if (orden){
+	datostxt();}
 }
 
 void llenarname(){
-	string apodo,namae;
+	string apodo="",namae="";
 	if(turn){
 		namae=J1nombre;
 		apodo=J1alias;
@@ -160,8 +166,8 @@ void llenarname(){
 	for(int i =0; i<200;i++){
 		if (player.name[i]==namae && player.aka[i]==apodo){
 			player.win[i]++;
+			//cout<<player.win[i];
 			ordenTop();
-			cout<<player.win[i];
 			break;
 		}
 		else if (player.name[i]==""){
@@ -171,8 +177,8 @@ void llenarname(){
 				ordenTop();
 				break;
 		}
-		cout <<player.win[i]+"  "<<player.name[i]+"  "+player.aka[i]<<endl;
 	}
+	
 }
 
 //CODIGO DE AQUÍ EN ADELANTE ES ACERCA DEL JUEGO CONECT4 
@@ -190,17 +196,26 @@ void llenar(){
 void dibujarButtons(){
 	//cuadros verdes en los cuales se trabajarán los botones, se deben hacer flechas verticales 
 	//horizontales
+	int x=35, y=20, a=35, b=50;
 	for (int i=0; i < filasB; i++) {
 		Point inicioB(espacio, tam*i + espacio);
 		Point finB(tam*columnasB+espacio, tam*i+espacio);
-		line(ventana, inicioB, finB, verde);
+		line(ventana, inicioB, finB, amarillo);
 	} // verticales
 	for (int i = 0; i<9; i++){
 			Point inicio2(tam*i + espacio, espacio);
 		Point fin2(tam*i + espacio, tam*filasB + espacio);
-		line(ventana, inicio2, fin2, verde);
+		line(ventana, inicio2, fin2, amarillo);
 	}
-	//AQUI PEDRROOOOOOO!!!!!
+	for (int i=0; i<8; i++){
+		
+	
+		Point inicio(x ,y);
+		Point fin(a ,b );
+		arrowedLine(ventana, inicio, fin, Scalar(0,0,255));
+  		x+=50;
+		a+=50;  
+	 }
 
 	}
 
@@ -210,14 +225,14 @@ void dibujartablero() {
 	{
 		Point inicio1(espacio, (tam*i + espacio));
 		Point fin1(tam*columnas + espacio, tam*i + espacio);
-		line(ventana, inicio1, fin1, blanco);
+		line(ventana, inicio1, fin1, negro);
 	}
 
 	for (int i = 0; i < filas; i++)
 	{
 		Point inicio2(tam*i + espacio, espacio);
 		Point fin2(tam*i + espacio, tam*filas + espacio);
-		line(ventana, inicio2, fin2, blanco);
+		line(ventana, inicio2, fin2, negro);
 	}
 	}
 
@@ -237,7 +252,7 @@ void dibujarMaru(int i){
 	if (i==0){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(35,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(35,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -253,7 +268,7 @@ void dibujarMaru(int i){
 	else if (i==1){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(85,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(85,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -269,7 +284,7 @@ void dibujarMaru(int i){
 	else if (i==2){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(135,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(135,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -285,7 +300,7 @@ void dibujarMaru(int i){
 	else if (i==3){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(185,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(185,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -301,7 +316,7 @@ void dibujarMaru(int i){
 	else if (i==4){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(235,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(235,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -317,7 +332,7 @@ void dibujarMaru(int i){
 	else if (i==5){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(285,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(285,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -333,7 +348,7 @@ void dibujarMaru(int i){
 	else if (i==6){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(335,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(335,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -349,7 +364,7 @@ void dibujarMaru(int i){
 	else if (i==7){
 		while(s>=0){
 			if (tablero[s][i]==0){
-	 			circle(ventana, Point(385,y) , radio, (turn? azul:blanco), CV_FILLED);		
+	 			circle(ventana, Point(385,y) , radio, (turn? azul:naranja), CV_FILLED);		
 	 			break;
 	 		}
 	 		else if (tablero[s][i]!=0){
@@ -365,7 +380,7 @@ void dibujarMaru(int i){
 }
 
 void kakuempate(){
-	Mat Empate(200, 500, CV_8UC3, blanco);
+	Mat Empate(200, 500, CV_8UC3, Scalar(51,255,255));
     putText(Empate, "-Empate-", Point(5, 100), FONT_HERSHEY_SIMPLEX, 3, verde);
     imshow("Empate", Empate);
 
@@ -373,13 +388,15 @@ void kakuempate(){
 }
 
 void ganador(){
-	string winner;
+	string winner="";
 	winner=(turn? J1nombre:J2nombre);
-        Mat ganador(200, 600, CV_8UC3, blanco);
+       Mat ganador(200, 600, CV_8UC3, Scalar(51,255,255));
     putText(ganador, "El ganador es: "+winner, Point(5, 100), FONT_HERSHEY_SIMPLEX, 1.6, rojo);
     imshow("Ganador", ganador);
+    endgame=true;
+
     llenarname();
-    endgame = true;
+    
 }
 
 void Empate(){
@@ -413,7 +430,6 @@ void onMouse(int event, int x, int y, int, void*) {
 	 					s--;
 	 						}
 	 						}
-
 	 				Empate();
 					check();
 					if (endgame==false){
@@ -427,7 +443,7 @@ void onMouse(int event, int x, int y, int, void*) {
 
 
 		if (bandera) {
-			arr();
+			//arr();
 			bandera = false;
 			//cout<<m<<endl;
 		}
@@ -447,7 +463,7 @@ void onMouse(int event, int x, int y, int, void*) {
 				}
 				else if (x>=75 && x< 314 && y>=250 && y <=324){
 					cerrar=true;
-
+					
 				}
 		}
 	//sit
@@ -457,23 +473,22 @@ void onMouse(int event, int x, int y, int, void*) {
 		if (event==EVENT_LBUTTONUP){
 			if(x>=110 && x<383 && y>=65 && y<=95){
 				//cout<<"cuadro de nombre"<<endl;
-				
+				int cont1=0,cont2=0,cont3=0,cont4=0;
 				if (waitKey()){
-
-					while (true){
+					while (true && cont1==0){
 						if(J1nombre.length()==5 or waitKey()==13){
 							break;}
 
 							aux=waitKey();
 							J1nombre+=putchar(toupper(aux));
-							putText(Ins,"-"+J1nombre,Point(115,90), FONT_HERSHEY_SIMPLEX,1,rojo);
+							putText(Ins,"-"+J1nombre,Point(115,90), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J1nombre<<endl;
-							
+						}	
 						
-					}}
+					}
 				}
 			else if (x>=110 && x<383 && y>=125 && y<=155 && J1nombre.length()!=0)	{
-				cout<<"cuadro de alias"<<endl;
+				//cout<<"cuadro de alias"<<endl;
 				
 					if (waitKey()){
 						while (true){
@@ -481,7 +496,7 @@ void onMouse(int event, int x, int y, int, void*) {
 
 							aux=waitKey();
 							J1alias+=putchar(toupper(aux));
-							putText(Ins,"-"+J1alias,Point(115,150), FONT_HERSHEY_SIMPLEX,1,rojo);
+							putText(Ins,"-"+J1alias,Point(115,150), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J1alias<<endl;
 					
 							
@@ -490,7 +505,7 @@ void onMouse(int event, int x, int y, int, void*) {
 				}		
 							}
 			else if(x>=110 && x<383 && y>=245 && y<=275 && J1nombre.length()!=0 && J1alias.length()!=0){
-				cout<<"cuadro de nombre"<<endl;
+				//cout<<"cuadro de nombre"<<endl;
 				
 				if (waitKey()){
 					while (true){
@@ -498,12 +513,12 @@ void onMouse(int event, int x, int y, int, void*) {
 
 							aux=waitKey();
 							J2nombre+=putchar(toupper(aux));
-							putText(Ins,"-"+J2nombre,Point(115,270), FONT_HERSHEY_SIMPLEX,1,rojo);
+							putText(Ins,"-"+J2nombre,Point(115,270), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J2nombre<<endl;
 							
 					}}}	
 			else if (x>=110 && x<383 && y>=305 && y<=335 && J1nombre.length()!=0 && J1alias.length()!=0 && J2nombre.length())	{
-				cout<<"cuadro de alias"<<endl;
+				//cout<<"cuadro de alias"<<endl;
 				
 					if (waitKey()){
 						while (true){
@@ -511,7 +526,7 @@ void onMouse(int event, int x, int y, int, void*) {
 
 							aux=waitKey();
 							J2alias+=putchar(toupper(aux));
-							putText(Ins,"-"+J2alias,Point(115,330), FONT_HERSHEY_SIMPLEX,1,rojo);
+							putText(Ins,"-"+J2alias,Point(115,330), FONT_HERSHEY_SIMPLEX,1,negro);
 							//cout<<J1alias<<endl;
 							
 
@@ -536,7 +551,7 @@ void onMouse(int event, int x, int y, int, void*) {
 
 //CODIGO DE AQÚI EN ADELANTE ES SOBRE EL MENU!!!!!
 void dibujarBmenu(Mat Menu){
-	putText(Menu, "-Connect 4-", Point(10,50), FONT_HERSHEY_SCRIPT_SIMPLEX, 2, verde);
+	putText(Menu, "-Connect 4-", Point(10,50), FONT_HERSHEY_SCRIPT_SIMPLEX, 2, Scalar(0,128,255));
     //imshow("Empate", Menu);
 	
 	Rect recPlay (75,63,240,73); 
@@ -552,12 +567,12 @@ void dibujarBmenu(Mat Menu){
 
 //A PARTIR DE ACÁ SE USARÁ CODIGO DE EL SISTEMA DE INSCRIPCIÓN
 void Dibujarinscrip(Mat Ins){
-	putText(Ins,"Jugador 1", Point(10,30), FONT_HERSHEY_SIMPLEX,0.7,blanco);
+	putText(Ins,"Jugador 1", Point(10,30), FONT_HERSHEY_SIMPLEX,0.7,azul);
 	
-	putText(Ins,"Nombre: ", Point(10,85), FONT_HERSHEY_SIMPLEX,0.7,blanco);
+	putText(Ins,"Nombre: ", Point(10,85), FONT_HERSHEY_SIMPLEX,0.7,azul);
 		Rect recNamae1 (110,65,275,30); 
 		rectangle(Ins, recNamae1,blanco,CV_FILLED);
-	putText(Ins,"Alias: ", Point(10,145), FONT_HERSHEY_SIMPLEX,0.7,blanco);
+	putText(Ins,"Alias: ", Point(10,145), FONT_HERSHEY_SIMPLEX,0.7,azul);
 		Rect recAlias1 (110,125,275,30);
 		rectangle(Ins,recAlias1,blanco,CV_FILLED);
 
@@ -583,17 +598,28 @@ void DibujarTop(){
 	Rect mune(140,345,100,30);
 	rectangle(Top,mune,rojo,CV_FILLED);
 	putText(Top,"Menu",Point(150,370), FONT_HERSHEY_SIMPLEX, 0.8, blanco);
-	putText(Top,"Menu",Point(150,370), FONT_HERSHEY_SIMPLEX, 0.8, blanco);
+	putText(Top,"A.K.A.",Point(90,70), FONT_HERSHEY_TRIPLEX, 0.8, Scalar(51,255,255));
+	putText(Top,"Wins",Point(225,70), FONT_HERSHEY_TRIPLEX, 0.8, Scalar(51,255,255));
 
-	int y=85;
+
+	int y=95;
 	for (int i=0; i<11; i++){
 		if (player.name[i].length()>=0){
+		//	ostringstream os;
+		//	os<<player.win[i];
 		putText(Top, player.aka[i], Point(90,y),FONT_HERSHEY_PLAIN, 1.1, blanco);
+		//putText(Top, os.str()+" pts.", Point(230,y), FONT_HERSHEY_PLAIN, 1.1, blanco);
 		y+=25;
+	}	
 	}
-		
+	int y2=95;
+	for (int i=0; i<10; i++){
+		ostringstream os;
+		os<<player.win[i];
+		putText(Top, os.str()+" pts.", Point(230,y2), FONT_HERSHEY_PLAIN, 1.1, blanco);
+		y2+=25;
 	}
-}
+} 
 
 int main(int argc, char const *argv[]) {
 	llenar();
@@ -603,7 +629,7 @@ int main(int argc, char const *argv[]) {
 }
 
 void Menu(){
-	Mat Menu (400,400,CV_8UC3,negro);
+	Mat Menu (400,400,CV_8UC3,Scalar(153,255,153));
 	namedWindow("Ventana");
 	int option=0;
 	dibujarBmenu(Menu);
@@ -624,23 +650,26 @@ void Menu(){
 //DESDE AQUI SE CREA EL ARCHIVO CON LOS NOMBRES 
 
 void check () {
+
  //filas
- for (int i=0; i<=7; i++){
-    for (int j=0; j<=7;j++){
+ for (int i=0; i<8; i++){
+    for (int j=0; j<5;j++){
            
             if(tablero[i][j]==tablero[i][j+1] && tablero[i][j+2]==tablero[i][j+3] && tablero[i][j] == tablero[i][j+3] && tablero[i][j] !=0) {
             ganador();
-            !endgame;}
+            !endgame;
+        }
     }
 	}
  	//columnas
- for (int i=0; i<=7; i++){
-    for (int j=0; j<=7;j++){
+ for (int i=0; i<5; i++){
+    for (int j=0; j<8;j++){
            
             if(tablero[i][j]==tablero[i+1][j] && tablero[i+2][j]==tablero[i+3][j] && tablero[i][j] == tablero[i+3][j] && tablero[i][j] !=0) {
             ganador();
-            !endgame;}
-    }
+            !endgame;
+        }
+    }}
 	//diagonales izquierda a derecha
 	if(tablero[0][4]==tablero[1][5] && tablero[2][6]==tablero[3][7] && tablero[0][4] == tablero[3][7] && tablero[0][4] !=0){
             ganador();
@@ -860,7 +889,7 @@ void check () {
  
  
  	//check final
- }}
+ }
 
 void Top10(){
 	namedWindow("Ventana");
@@ -892,7 +921,7 @@ void DibujarJuego(){
 	namedWindow("Ventana");
 
 	setMouseCallback("Ventana", onMouse);
-	arr();
+	//arr();
 	dibujartablero();
 	dibujarButtons();
 
